@@ -1,0 +1,23 @@
+{
+  "name": "socket-chatt-with-web-api-integration-",
+  "version": "1.0.0",
+  "description": "Node express socket.io chat sever",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mohsinrahman/Socket-chatt-with-Web-API-integration-.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mohsinrahman/Socket-chatt-with-Web-API-integration-/issues"
+  },
+  "homepage": "https://github.com/mohsinrahman/Socket-chatt-with-Web-API-integration-#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "socket.io": "^2.3.0"
+  }
+}
