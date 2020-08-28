@@ -8,8 +8,16 @@ app.use(express.static('public'))
 
 function getConnection(socket){
     console.log("Connection done" + socket.id)
-
 }
-io.on("connection", getConnection)
+
+io.on('connection', (socket) => {
+    console.log('New WebSocket connection')
+
+    socket.emit('message', 'Welcome!')
+
+    socket.on('sendMessage', (message) => {
+        io.emit('message', message)
+    })
+})
 
 http.listen(port,() => console.log('Connecting to port'+ port))
