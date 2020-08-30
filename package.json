@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/mohsinrahman/Socket-chatt-with-Web-API-integration-#readme",
   "dependencies": {
+    "bad-words": "^3.0.3",
     "express": "^4.17.1",
     "socket.io": "^2.2.0"
   },
