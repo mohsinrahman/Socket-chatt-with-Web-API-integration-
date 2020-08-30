@@ -21,6 +21,17 @@ body {
 	margin: 20px;
 }
 
+.details{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 50px;
+  
+}
+.hide{
+	display: none;
+}
 .btn {
 	cursor: pointer;
 	padding: 3px 13px;
@@ -30,7 +41,7 @@ body {
 	font-size: 17px;
 }
 
-.chat-container {
+.chat-container .container{
 	max-width: 1100px;
 	background: #fff;
 	margin: 30px auto;
@@ -97,7 +108,9 @@ body {
 .join-container {
 	max-width: 500px;
 	margin: 80px auto;
-	color: #fff;
+	color:green;
+	border: medium solid gray;
+	border-radius: 10px;
 }
 
 .join-header {

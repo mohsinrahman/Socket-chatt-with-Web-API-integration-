@@ -14,12 +14,20 @@
     
     <div>
 
-        <div class="chat-container">
+        <div class="join-container">
             <header class="chat-header">
               <h1><i class="fas fa-leaf"></i> Chitchat</h1>
             </header>
-           
-              <div class="chat-messages"></div>
+            <div class= "details">
+              <input type="text" placeholder="User name">
+              <input type="text" placeholder="Room name">
+              <button onclick="userJoinBtn()">Join chat</button>
+            </div>
+            <div class="chat-container hide">
+              
+            <div class="chat-messages">
+
+            </div>
         
             <div class="chat-form-container">
               <form id="chat-form">
@@ -30,10 +38,11 @@
                   required
                   autocomplete="off"
                 />
-                <button class="btn"> Send</button>
+                <button class="btn" onclick="sendMsg()"> Send</button>
               </form>
             </div>
           </div>
+        </div>
     </div>
 </body>
 </html>

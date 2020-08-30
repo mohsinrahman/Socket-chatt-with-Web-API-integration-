@@ -1,30 +1,58 @@
-const chatForm = document.getElementById('chat-form')
-const chatMsgs = document.querySelector('.chat-messages');
-
 const socket  = io();
 
-socket.on('msg',msg=>{
-    console.log("I am calling msg"+msg);   
-    outputMsg(msg)
+let rum = ""
+let name = ""
+let checkRum = false
 
-    chatMsgs.scrollTop = chatMsgs.scrollHeight;
-})
+window.onload = function(){
+    callListner();
+}
 
-chatForm.addEventListener("submit",e =>{
-    e.preventDefault();
-    const msg = e.target.elements.msg.value;
-    socket.emit('chatMsg',msg)
+function callListner(){
 
-    e.target.elements.msg.value = '';
-    e.target.elements.msg.focus();
-    
-})
+     socket.on("User joined", joinUser)
+     socket.on("room joined",joinRum )
+     socket.on("msg",newMsg )
 
-function outputMsg(msg){
-    const div = document.createElement('div');
-    div.classList.add('message')
-    div.innerHTML = `<p class="meta">name<span>3.24pm</span></p>
-    <p class="text">
-    ${msg}</p>`;
-    document.querySelector('.chat-messages').appendChild(div)
+}
+function joinUser(){
+  const user =  document.querySelector('.details ')
+  const rum =  document.querySelector('.chat-container ')
+
+  user.classList.add("hide");
+  rum.classList.remove("hide");
+}
+function joinRum(msg){
+    const list  = document.querySelector('.chat-container .chat-messages')
+    const chatList = document.createElement("div")
+    chatList.className = "message"
+    chatList.innerText = msg;
+    list.appendChild(chatList)
+    checkRum = true
+
+}
+function newMsg(data){
+    console.log("newMsg");
+    const list  = document.querySelector('.chat-container .chat-messages')
+    const chatList = document.createElement("div")
+    console.log("chatList"+ chatList);
+    chatList.innerText = data.name + ":" + data.msg
+    console.log("ddddddddddddd"+data.name + ":" + data.msg);
+
+    list.append(chatList)
+}
+
+function userJoinBtn(){
+    const [nameI,rumI] = document.querySelectorAll('.details input')
+    name = nameI.value
+    rum = rumI.value
+
+    socket.emit('join room',{name,rum})
+}
+function sendMsg(){
+ const msgI = document.querySelector(".chat-container input")
+ const msg = msgI.value
+ console.log("||"+msg)
+ socket.emit('msg',{ name, rum, msg})
+ msgI.value = ""
 }
