@@ -2,21 +2,28 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" href="/img/favicon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Socket-chatt-with-Web-API-integration</title>
-    
-   
-    
+    <link rel="stylesheet" href="./css/styles.css">
 </head>
 <body>
-    <h1>Socket-chatt-with-Web-API-integration</h1>
-    <div id="messages"></div>
+    <div class="chat">
+        <div class="chat__sidebar">
 
-    <form id="message-form">
-        <input name="message" placeholder="Message">
-        <button>Send</button>
-    </form>
-    <button id="send-location">Send location</button>
+        </div>
+        <div class="chat__main">
+            <div id="messages" class="chat__messages"></div>
+
+            <div class="compose">
+                <form id="message-form">
+                    <input name="message" placeholder="Message">
+                    <button>Send</button>
+                </form>
+                <button id="send-location">Send location</button>
+            </div>                
+        </div>
+    </div>
 
     <script id="message-template" type="text/html">
         <div>
