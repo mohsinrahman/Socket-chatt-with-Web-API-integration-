@@ -10,10 +10,6 @@ const port = 3000 || process.env.PORT
 
 app.use(express.static('public'))
 
-function getConnection(socket){
-    console.log("Connection done" + socket.id)
-}
-
 io.on('connection', (socket) => {
     console.log('New WebSocket connection')
 
