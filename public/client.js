@@ -5,7 +5,6 @@ const $messageFormInput = $messageForm.querySelector("input");
 const $messageFormButton = $messageForm.querySelector("button");
 const $sendLocationButton = document.querySelector("#send-location");
 const $messages = document.querySelector("#messages");
-
 const messageTemplate = document.querySelector("#message-template").innerHTML;
 const locationMessageTemplate = document.querySelector(
   "#location-message-template"
@@ -16,16 +15,6 @@ const { username, room } = Qs.parse(location.search, {
   ignoreQueryPrefix: true,
 });
 
-
-
-/* var xhr = $.get("http://api.giphy.com/v1/gifs/search?q=ryan+gosling&api_key=cfwwRqigGqkeV8pidrxL6ULkN0UFJLwd&limit=5");
-xhr.done(function(data) { console.log("success got data", data); }); */
-
-
-const url = "http://api.giphy.com/v1/gifs/search?q=ryan+gosling&api_key=cfwwRqigGqkeV8pidrxL6ULkN0UFJLwd&limit=5"
-fetch(url)
-  .then(response => response.json())
-  .then(commits => alert(commits[0].author.login));
 
 const autoscroll = () => {
   // New message element
@@ -52,10 +41,6 @@ const autoscroll = () => {
 
 socket.on("message", (message) => {
   console.log(message);
-
-  if (message.text == "/") {
-    $sendLocationButton.setAttribute("style", "display: block;");
-  }
 
   const html = Mustache.render(messageTemplate, {
     username: message.username,
@@ -104,6 +89,29 @@ $messageForm.addEventListener("submit", (e) => {
     console.log("Message delivered!");
   });
 });
+
+$messageFormInput.addEventListener("keypress", logKey);
+function logKey(event) {
+  
+
+  if ($messageFormInput.value == "/ loc") {
+    console.log("Go to api");
+    const url =
+      "http://api.giphy.com/v1/gifs/search?q=ryan+gosling&api_key=cfwwRqigGqkeV8pidrxL6ULkN0UFJLwd&limit=5";
+    fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        console.log(result);
+      });
+  } else if ($messageFormInput.value == "/ loc") {
+
+  }  else if ($messageFormInput.value == "/ loc") {
+
+  } else if ($messageFormInput.value == "/ loc") {
+
+  } else console.log('There are nothing command')
+}
 
 $sendLocationButton.addEventListener("click", () => {
   if (!navigator.geolocation) {
