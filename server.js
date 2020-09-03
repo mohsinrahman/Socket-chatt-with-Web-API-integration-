@@ -5,6 +5,7 @@ const Filter = require("bad-words");
 const {
   generateMessage,
   generateLocationMessage,
+  generateGive,
 } = require("./utils/messages");
 const io = require("socket.io")(http, { pingTimeout: 25000 });
 const {
@@ -31,6 +32,7 @@ io.on("connection", (socket) => {
     socket.join(user.room);
 
     socket.emit("message", generateMessage("Admin", "Welcome!"));
+
     socket.broadcast
       .to(user.room)
       .emit(
@@ -59,29 +61,19 @@ io.on("connection", (socket) => {
     callback();
   });
 
-  socket.on("sendLocation", (coords, callback) => {
+  socket.on("sendGiv", (giv, callback) => {
     const user = getUser(socket.id);
-    io.to(user.room).emit(
-      "locationMessage",
-      generateLocationMessage(
-        user.username,
-        `https://google.com/maps?q=${coords.latitude},${coords.longitude}`
-      )
-    );
+    io.to(user.room).emit("giv", generateGive(user.username, giv));
     callback();
   });
 
-  socket.on("sendGiphy", (key, callback) => {
+  socket.on("sendLocation", (coords, callback) => {
     const user = getUser(socket.id);
-    io.to(user.room).emit(
-      "sendGiphy",
-      generateLocationMessage(
-        user.username,
-        `http://api.giphy.com/v1/gifs/search?q=ryan+gosling&api_key=cfwwRqigGqkeV8pidrxL6ULkN0UFJLwd&limit=5`
-      )
-    );
+    io.to(user.room).emit("locationMessage", generateLocationMessage( user.username, `https://google.com/maps?q=${coords.latitude},${coords.longitude}`)    );
     callback();
   });
+
+  
 
   socket.on("disconnect", () => {
     const user = removeUser(socket.id);

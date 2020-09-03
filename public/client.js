@@ -4,7 +4,10 @@ const $messageForm = document.querySelector("#message-form");
 const $messageFormInput = $messageForm.querySelector("input");
 const $messageFormButton = $messageForm.querySelector("button");
 const $sendLocationButton = document.querySelector("#send-location");
+const $sendGivButton = document.querySelector("#send-giv");
+const $sendWeatherButton = document.querySelector("#send-weather");
 const $messages = document.querySelector("#messages");
+const givTemplate = document.querySelector("#giv-template").innerHTML;
 const messageTemplate = document.querySelector("#message-template").innerHTML;
 const locationMessageTemplate = document.querySelector(
   "#location-message-template"
@@ -14,7 +17,6 @@ const sidebarTemplate = document.querySelector("#sidebar-template").innerHTML;
 const { username, room } = Qs.parse(location.search, {
   ignoreQueryPrefix: true,
 });
-
 
 const autoscroll = () => {
   // New message element
@@ -45,6 +47,19 @@ socket.on("message", (message) => {
   const html = Mustache.render(messageTemplate, {
     username: message.username,
     message: message.text,
+    createdAt: moment(message.createdAt).format("h:mm a"),
+  });
+  $messages.insertAdjacentHTML("beforeend", html);
+  autoscroll();
+});
+
+
+socket.on("giv", (message) => {
+  console.log(message);
+
+  const html = Mustache.render(givTemplate, {
+    username: message.username,
+    giv: message.giv,
     createdAt: moment(message.createdAt).format("h:mm a"),
   });
   $messages.insertAdjacentHTML("beforeend", html);
@@ -92,47 +107,60 @@ $messageForm.addEventListener("submit", (e) => {
 
 $messageFormInput.addEventListener("keypress", logKey);
 function logKey(event) {
-  
-
   if ($messageFormInput.value == "/ loc") {
-    console.log("Go to api");
-    const url =
-      "http://api.giphy.com/v1/gifs/search?q=ryan+gosling&api_key=cfwwRqigGqkeV8pidrxL6ULkN0UFJLwd&limit=5";
-    fetch(url)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        console.log(result);
-      });
-  } else if ($messageFormInput.value == "/ loc") {
-
-  }  else if ($messageFormInput.value == "/ loc") {
-
-  } else if ($messageFormInput.value == "/ loc") {
-
-  } else console.log('There are nothing command')
+    $sendLocationButton.setAttribute("style", "display: block;");
+  } else if ($messageFormInput.value == "/ giv") {
+    $sendGivButton.setAttribute("style", "display: block;");
+  } else if ($messageFormInput.value == "/ weath") {
+    $sendWeatherButton.setAttribute("style", "display: block;");
+  } else {
+    $sendLocationButton.setAttribute("style", "display: none;");
+    $sendGivButton.setAttribute("style", "display: none;");
+    $sendWeatherButton.setAttribute("style", "display: none;");
+  }
 }
 
-$sendLocationButton.addEventListener("click", () => {
-  if (!navigator.geolocation) {
-    return alert("Geolocation is not supported by your browser.");
-  }
+  $sendLocationButton.addEventListener("click", () => {
+    if (!navigator.geolocation) {
+      return alert("Geolocation is not supported by your browser.");
+    }
 
-  $sendLocationButton.setAttribute("disabled", "disabled");
+    $sendLocationButton.setAttribute("disabled", "disabled");
 
-  navigator.geolocation.getCurrentPosition((position) => {
-    socket.emit(
-      "sendLocation",
-      {
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude,
-      },
-      () => {
-        $sendLocationButton.removeAttribute("disabled");
-        console.log("Location shared!");
-      }
-    );
+    navigator.geolocation.getCurrentPosition((position) => {
+      socket.emit(
+        "sendLocation",
+        {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        },
+        () => {
+          $sendLocationButton.removeAttribute("disabled");
+          console.log("Location shared!");
+        }
+      );
+    });
   });
+
+  
+$sendGivButton.addEventListener("click", () => {
+  $sendGivButton.setAttribute("disabled", "disabled");
+
+  const url =
+    "http://api.giphy.com/v1/gifs/search?q=ryan+gosling&api_key=cfwwRqigGqkeV8pidrxL6ULkN0UFJLwd&limit=5";
+  fetch(url)
+    .then((response) => response.json())
+    .then((data) => {
+      socket.emit("sendGiv", data.data[0].url, (error) => {
+        $sendGivButton.removeAttribute("disabled");
+        if (error) {
+          return console.log(error);
+        }
+
+        console.log("Giv delivered!");
+        console.log(data.data[0].url+"gif");
+      });
+    });  
 });
 
 socket.emit("join", { username, room }, (error) => {
