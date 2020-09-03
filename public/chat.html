@@ -16,18 +16,15 @@
 
         <div class="compose">
           <form id="message-form">
-            <input
-              name="message"
-              placeholder="Message"
-              required
-              autocomplete="off"
-            />
+            <input  name="message" placeholder="Message" required  autocomplete="off"/>
             <button>Send</button>
           </form>
           <div id="buttonContainer"> 
             <button id="send-location">Send location</button>
-            <button id="send-giv">Send Giv</button>
+            <button id="send-gif">Send Gif</button>
             <button id="send-weather">Send Weather</button>
+            <button id="send-npa">Send Best NPA</button>
+            <button id="send-corona">Send Corona result</button>
           </div>
         </div>
       </div>
@@ -44,17 +41,52 @@
     </script>
 
 
-    <script id="giv-template" type="text/html">
+    <script id="gif-template" type="text/html">
         <div class="message">
           <p>
             <span class="message__name">{{username}}</span>
             <span class="message__meta">{{createdAt}}</span>
-          </p>    
-          <img src="{{giv}}.gif" alt="">      
-     
+          </p>  
+         <!--  <img src="{{gif}}" alt=""> -->
+          <p><a href="{{gif}}" target="_blank">Gif</a></p>
+         <!--  <div> {{gif}} </div> -->
         </div>
-    </script>
+       
+    </script> 
 
+    <script id="npa-template" type="text/html">
+      <div class="message">
+        <p>
+          <span class="message__name">{{username}}</span>
+          <span class="message__meta">{{createdAt}}</span>
+        </p>  
+        <div> {{npa}} </div>
+      </div>
+     
+  </script> 
+
+  <script id="corona-template" type="text/html">
+    <div class="message">
+      <p>
+        <span class="message__name">{{username}}</span>
+        <span class="message__meta">{{createdAt}}</span>
+      </p>  
+      <div> {{corona}} </div>
+    </div>
+   
+</script> 
+
+  <script id="weather-template" type="text/html">
+    <div class="message">
+      <p>
+        <span class="message__name">{{username}}</span>
+        <span class="message__meta">{{createdAt}}</span>
+      </p>  
+      <div> {{weather}} </div>
+    </div>
+   
+</script> 
+    
 
     <script id="location-message-template" type="text/html">
       <div class="message">

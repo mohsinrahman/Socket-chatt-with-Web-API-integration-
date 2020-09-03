@@ -6,10 +6,34 @@ const generateMessage = (username, text) => {
     }
 }
 
-const generateGive = (username, giv) => {
+const generateGif = (username, gif) => {
     return {
         username,
-        giv,
+        gif,
+        createdAt: new Date().getTime()
+    }
+}
+
+const generateNpa = (username, npa) => {
+    return {
+        username,
+        npa,
+        createdAt: new Date().getTime()
+    }
+}
+
+const generateCorona = (username, corona) => {
+    return {
+        username,
+        corona,
+        createdAt: new Date().getTime()
+    }
+}
+
+const generateWeather = (username, weather) => {
+    return {
+        username,
+        weather,
         createdAt: new Date().getTime()
     }
 }
@@ -25,5 +49,8 @@ const generateLocationMessage = (username, url) => {
 module.exports = {
     generateMessage,
     generateLocationMessage,
-    generateGive
+    generateGif,
+    generateNpa,
+    generateWeather,
+    generateCorona
 }

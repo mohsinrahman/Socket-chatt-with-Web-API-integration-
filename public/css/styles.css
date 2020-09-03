@@ -180,11 +180,12 @@ button:disabled {
     padding: 12px 24px 0 24px;
 }
 
-#send-location ,#send-giv ,#send-weather{
+#send-location ,#send-gif ,#send-weather,#send-npa,#send-corona {
     display: none;
     width: 100%;
     margin: 2px;
     margin-left: 0;
+    opacity: 50%;
 }
 
 div#buttonContainer {

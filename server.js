@@ -1,19 +1,10 @@
 const express = require("express");
 const app = express();
 const http = require("http").Server(app);
-const Filter = require("bad-words");
-const {
-  generateMessage,
-  generateLocationMessage,
-  generateGive,
-} = require("./utils/messages");
+
+const { generateMessage, generateLocationMessage, generateGif, generateNpa, generateWeather, generateCorona } = require("./utils/messages");
 const io = require("socket.io")(http, { pingTimeout: 25000 });
-const {
-  addUser,
-  removeUser,
-  getUser,
-  getUsersInRoom,
-} = require("./utils/users");
+const { addUser, removeUser, getUser, getUsersInRoom } = require("./utils/users");
 
 const port = 3000 || process.env.PORT;
 
@@ -33,37 +24,38 @@ io.on("connection", (socket) => {
 
     socket.emit("message", generateMessage("Admin", "Welcome!"));
 
-    socket.broadcast
-      .to(user.room)
-      .emit(
-        "message",
-        generateMessage("Admin", `${user.username} has joined!`)
-      );
-    io.to(user.room).emit("roomData", {
-      room: user.room,
-      users: getUsersInRoom(user.room),
-    });
-    // socket.emit, io.emit, socket.broadcast.emit
-    // io.to.emit, socket.broadcast.to.emit
-
+    socket.broadcast.to(user.room).emit("message", generateMessage("Admin", `${user.username} has joined!`));
+    io.to(user.room).emit("roomData", { room: user.room, users: getUsersInRoom(user.room)});
     callback();
   });
 
   socket.on("sendMessage", (message, callback) => {
     const user = getUser(socket.id);
-    const filter = new Filter();
-
-    if (filter.isProfane(message)) {
-      return callback("Profanity is not allowed!");
-    }
-
     io.to(user.room).emit("message", generateMessage(user.username, message));
     callback();
   });
 
-  socket.on("sendGiv", (giv, callback) => {
+  socket.on("sendGif", (message, callback) => {
     const user = getUser(socket.id);
-    io.to(user.room).emit("giv", generateGive(user.username, giv));
+    io.to(user.room).emit("gif", generateGif(user.username, message));
+    callback();
+  });
+
+  socket.on("sendNPA", (message, callback) => {
+    const user = getUser(socket.id);
+    io.to(user.room).emit("npa", generateNpa(user.username, message));
+    callback();
+  });
+
+  socket.on("sendCorona", (message, callback) => {
+    const user = getUser(socket.id);
+    io.to(user.room).emit("corona", generateCorona(user.username, message));
+    callback();
+  });
+
+  socket.on("sendWeather", (message, callback) => {
+    const user = getUser(socket.id);
+    io.to(user.room).emit("weather", generateWeather(user.username, message));
     callback();
   });
 
