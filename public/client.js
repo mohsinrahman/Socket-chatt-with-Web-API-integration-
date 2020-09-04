@@ -16,7 +16,7 @@ const messageTemplate = document.querySelector("#message-template").innerHTML;
 const locationMessageTemplate = document.querySelector("#location-message-template").innerHTML;
 const sidebarTemplate = document.querySelector("#sidebar-template").innerHTML;
 
-const { username, room } = Qs.parse(location.search, {ignoreQueryPrefix: true});
+const { username, room, password } = Qs.parse(location.search, {ignoreQueryPrefix: true});
 
 const autoscroll = () => {
   // New message element
@@ -170,12 +170,7 @@ function logKey(event) {
     $sendLocationButton.setAttribute("disabled", "disabled");
 
     navigator.geolocation.getCurrentPosition((position) => {
-      socket.emit(
-        "sendLocation",
-        {
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-        },
+      socket.emit("sendLocation", { latitude: position.coords.latitude, longitude: position.coords.longitude },
         () => {
           $sendLocationButton.removeAttribute("disabled");
           //console.log("Location shared!");
@@ -276,7 +271,7 @@ $sendWeatherButton.addEventListener("click", () => {
  });
 });
 
-socket.emit("join", { username, room }, (error) => {
+socket.emit("join", { username, room, password }, (error) => {
   if (error) {
     alert(error);
     location.href = "/";
