@@ -2,7 +2,7 @@
   "name": "socket-chatt-with-web-api-integration-",
   "version": "1.0.0",
   "description": "Node express socket.io chat sever",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "echo \"Error: no test specified\" && exit 1"
   },
