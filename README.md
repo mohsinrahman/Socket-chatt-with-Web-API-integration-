@@ -38,8 +38,10 @@ The assignment is submitted on time! (Yes)
 
 VG 
 
+npm install express
 All points for passing are met (Yes) 
 
+npm install socket.io
 It should be possible to select a nick (name) (Yes) 
 
 When someone writes, it should be visible to others (Yes) 
@@ -69,4 +71,5 @@ https://github.com/mohsinrahman/Socket-chatt-with-Web-API-integration-
  
  
 To run: 
+node server.js 
 node server.js 
