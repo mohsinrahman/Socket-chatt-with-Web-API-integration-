@@ -190,7 +190,7 @@ $sendNpaButton.addEventListener("click", () => {
 })
 .then((response) => response.json())
     .then((data) => {
-      const npaResult = 'Best NPA Club in USA is  abbreviation:'+ data.data[0].abbreviation + ' ,city:' + data.data[0].city + ' ,conference:'+ data.data[0].conference + ' ,full_name:'+ data.data[0].full_name + ' ,name:'+ data.data[0].name
+      const npaResult = 'Best NBA Club in USA is  abbreviation:'+ data.data[0].abbreviation + ' ,city:' + data.data[0].city + ' ,conference:'+ data.data[0].conference + ' ,full_name:'+ data.data[0].full_name + ' ,name:'+ data.data[0].name
       socket.emit("sendNPA", npaResult, (error) => {       
         if (error) {
           return console.log(error);
