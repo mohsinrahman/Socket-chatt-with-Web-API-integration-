@@ -19,7 +19,6 @@
   "dependencies": {
     "@giphy/js-fetch-api": "^1.6.2",
     "@giphy/react-components": "^1.7.1-alpha.0",
-    "bad-words": "^3.0.3",
     "express": "^4.17.1",
     "socket.io": "^2.3.0"
   },

@@ -64,12 +64,15 @@ npm install socket.io
 npm add @giphy/react-components @giphy/js-fetch-api 
   
 npm i bad-words 
- 
- 
+
+
+To run: 
+node server.js 
+
+
+
 Github link: 
 https://github.com/mohsinrahman/Socket-chatt-with-Web-API-integration- 
  
  
-To run: 
-node server.js 
-node server.js 
+
