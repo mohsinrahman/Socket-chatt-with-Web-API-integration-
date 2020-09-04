@@ -42,7 +42,7 @@ const autoscroll = () => {
 };
 
 socket.on("message", (message) => {
-  //console.log(message);
+  console.log(message);
 
   const html = Mustache.render(messageTemplate, {
     username: message.username,
@@ -106,7 +106,7 @@ socket.on("gif", (message) => {
 });
 
 socket.on("locationMessage", (message) => {
-  //console.log(message);
+  console.log(message);
   const html = Mustache.render(locationMessageTemplate, {
     username: message.username,
     url: message.url,
@@ -137,16 +137,15 @@ $messageForm.addEventListener("submit", (e) => {
     $messageFormInput.focus();
 
     if (error) {
-      return //console.log(error);
+      return console.log(error);
     }
 
-    //console.log("Message delivered!");
+    console.log("Message delivered!");
   });
 });
 
-$messageFormInput.addEventListener("keypress", logKey);
-function logKey(event) {
-  if ($messageFormInput.value == "/") {
+$messageFormInput.addEventListener('input', function (evt) {
+   if (this.value == "/") {
     $sendLocationButton.setAttribute("style", "display: block;");
     $sendGifButton.setAttribute("style", "display: block;");
     $sendWeatherButton.setAttribute("style", "display: block;");
@@ -160,7 +159,7 @@ function logKey(event) {
     $sendNpaButton.setAttribute("style", "display: none;");
     $sendCoronaButton.setAttribute("style", "display: none;");
   }
-}
+})
 
   $sendLocationButton.addEventListener("click", () => {
     if (!navigator.geolocation) {
@@ -173,7 +172,7 @@ function logKey(event) {
       socket.emit("sendLocation", { latitude: position.coords.latitude, longitude: position.coords.longitude },
         () => {
           $sendLocationButton.removeAttribute("disabled");
-          //console.log("Location shared!");
+          console.log("Location shared!");
         }
       );
     });
