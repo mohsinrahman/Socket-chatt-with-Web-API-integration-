@@ -14,7 +14,7 @@ Description:
 3. Chat box for communication will appear. Where one can start the chat. 
 4. By opening different windows user can communicate and chat will be visible to others. Joined message will also appear. And if one leaves the room left message will appear. 
 
-It is not allowed to add another user with the same name in the room. One person can join more than one room. 
+It is not allowed to add another user with the same name in the room. 
 
 5. Enter / to see the see all of the API’s.  
 6. It has more than 3 commands for external API's. 
